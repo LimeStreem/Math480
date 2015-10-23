@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+</head>
+<body>
+
+<script id="jsbin-javascript">
+var N = 61;
+var p = [Math.floor(Math.sqrt(N))];
+var q = [1];
+var m = [Math.pow(p[0],2)-N];
+var x = [];
+
+var solveX = function(k)
+{
+    var nFirst = Math.max(1,Math.ceil(Math.sqrt(N)) - Math.abs(m[k-1]));
+    var nEnd = Math.ceil(Math.sqrt(N));
+    for(var i = nFirst; i < nEnd;i++)
+      {
+        if((p[k-1] + i* q[k-1])%Math.abs(m[k-1])===0)
+          {
+            x[k] = i;
+            return;
+          }
+      }
+};
+
+var confirm = function(t)
+{
+  return p[t]*p[t] - N * q[t] * q[t] === 1;
+};
+
+solveX(1);
+p[1] = (p[0]*x[1] + N)/Math.abs(m[0]);
+q[1] = (p[0] + x[1])/ Math.abs(m[0]);
+m[1] = (x[1]*x[1] - N)/m[0];
+console.log(x);
+console.log(p);
+console.log(q);
+console.log(m);
+
+for(var j = 2;j < 30; j++)
+{
+    if(m[j-1]===1)break;
+    solveX(j);
+    p[j] = (p[j-1] * x[j]+N*q[j-1])/Math.abs(m[j-1]);
+    q[j] = (p[j-1] + q[j-1]*x[j])/Math.abs(m[j-1]);
+    m[j] = (x[j]*x[j] - N) / m[j-1];
+    console.log("("+p[j] +"," + q[j] + "," + m[j] + ")");
+}
+</script>
+
+
+
+<script id="jsbin-source-javascript" type="text/javascript">var N = 61;
+var p = [Math.floor(Math.sqrt(N))];
+var q = [1];
+var m = [Math.pow(p[0],2)-N];
+var x = [];
+
+var solveX = function(k)
+{
+    var nFirst = Math.max(1,Math.ceil(Math.sqrt(N)) - Math.abs(m[k-1]));
+    var nEnd = Math.ceil(Math.sqrt(N));
+    for(var i = nFirst; i < nEnd;i++)
+      {
+        if((p[k-1] + i* q[k-1])%Math.abs(m[k-1])===0)
+          {
+            x[k] = i;
+            return;
+          }
+      }
+};
+
+var confirm = function(t)
+{
+  return p[t]*p[t] - N * q[t] * q[t] === 1;
+};
+
+solveX(1);
+p[1] = (p[0]*x[1] + N)/Math.abs(m[0]);
+q[1] = (p[0] + x[1])/ Math.abs(m[0]);
+m[1] = (x[1]*x[1] - N)/m[0];
+console.log(x);
+console.log(p);
+console.log(q);
+console.log(m);
+
+for(var j = 2;j < 30; j++)
+{
+    if(m[j-1]===1)break;
+    solveX(j);
+    p[j] = (p[j-1] * x[j]+N*q[j-1])/Math.abs(m[j-1]);
+    q[j] = (p[j-1] + q[j-1]*x[j])/Math.abs(m[j-1]);
+    m[j] = (x[j]*x[j] - N) / m[j-1];
+    console.log("("+p[j] +"," + q[j] + "," + m[j] + ")");
+}</script></body>
+</html>
